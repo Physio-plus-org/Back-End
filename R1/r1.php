@@ -48,9 +48,9 @@ $username = "root";
 $password = "";
 $dbname = "physiop";
 $tabname = "r1";
+$psfusers = "psfusers";
 
 session_start();
-include_once "database.php";
 
 // Create a connection to the database
 $conn = mysqli_connect($servername, $username, $password, $dbname);
@@ -122,17 +122,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if(!empty($namePhysio) && empty($namePhysioErr) &&!empty($addressPhysio) && empty($addressPhysioErr) && !empty($afmPhysio) && empty($afmPhysioErr)){
    // Insert the data into the database
 //   $sql = "INSERT INTO $tabname (namePhysio, addressPhysio, afmPhysio, username, passwd) VALUES ('$namePhysio', '$addressPhysio', $afmPhysio', $username','" . md5($passwd) . "')";
-  $sql = "INSERT INTO $tabname (namePhysio, addressPhysio, afmPhysio, username, passwd) VALUES ('$namePhysio', '$addressPhysio', '$afmPhysio', '$username','" . md5($passwd) . "')";
+  $sql = "INSERT INTO $tabname (namePhysio, addressPhysio, afmPhysio) VALUES ('$namePhysio', '$addressPhysio', '$afmPhysio')";
+  
+  
   if (mysqli_query($conn, $sql)) {
          echo "Data saved successfully";
   } else {
       echo "Error: " . $sql . "<br>" . mysqli_error($conn);
    }
-}
+
+   $sql = "INSERT INTO $psfusers (username, passwd) VALUES ('$username','" . md5($passwd) . "')";
+   if (mysqli_query($conn, $sql)) {
+    echo "Data saved successfully";
+  } else {
+      echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+    }
 
 
-// Close the database connection
-mysqli_close($conn);
+  }
+
 
 
 function test_input($data) {
@@ -141,6 +149,9 @@ function test_input($data) {
    $data = htmlspecialchars($data);
    return $data;
 }
+
+// Close the database connection
+mysqli_close($conn);
 
 ?>
 
