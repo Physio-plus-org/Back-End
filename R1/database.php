@@ -5,7 +5,7 @@ ini_set('display_errors', 1);
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "database";
+$dbname = "physio";
 $tabname = "physio_centers";
 //$psfusers = "psfusers";
 
