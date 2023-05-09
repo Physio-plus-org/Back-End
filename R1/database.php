@@ -5,9 +5,9 @@ ini_set('display_errors', 1);
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "physiop";
-$tabname = "r1";
-$psfusers = "psfusers";
+$dbname = "database";
+$tabname = "physio_centers";
+//$psfusers = "psfusers";
 
 // Create connection
 $conn = mysqli_connect($servername, $username, $password);
@@ -30,9 +30,9 @@ mysqli_select_db($conn, $dbname);
 
 $sql = "CREATE TABLE IF NOT EXISTS $tabname (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    namePhysio VARCHAR(50) NOT NULL,
-    addressPhysio VARCHAR(70) NOT NULL,
-    afmPhysio VARCHAR(9) UNIQUE KEY
+    name VARCHAR(50) NOT NULL,
+    address VARCHAR(70) NOT NULL,
+    tax_id_number VARCHAR(9) UNIQUE KEY
 )";
 
 if (mysqli_query($conn, $sql)) {

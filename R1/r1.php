@@ -2,9 +2,9 @@
 <?php
 // define variables and set to empty values
 $data = array();
-$namePhysio = $_POST["namePhysio"];
-$addressPhysio = $_POST["addressPhysio"];
-$afmPhysio = $_POST["afmPhysio"];
+$namePhysio = $_POST["name"];
+$addressPhysio = $_POST["address"];
+$afmPhysio = $_POST["tax_id_number"];
 //$passwd = $_POST["passwd"];
 //$username = $_POST["username"];
 
@@ -13,8 +13,8 @@ $afmPhysio = $_POST["afmPhysio"];
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "physiop";
-$tabname = "r1";
+$dbname = "database";
+$tabname = "physio_centers";
 //$psfusers = "psfusers";
 
 session_start();
@@ -28,7 +28,7 @@ if (!$conn) {
 }
  
  // Insert the data into the database
-  $sql = "INSERT INTO $tabname (namePhysio, addressPhysio, afmPhysio) VALUES ('$namePhysio', '$addressPhysio', '$afmPhysio')";
+  $sql = "INSERT INTO $tabname (name, address, tax_id_number) VALUES ('$namePhysio', '$addressPhysio', '$afmPhysio')";
   
     if (mysqli_query($conn, $sql)) {
          echo "Data saved successfully";
