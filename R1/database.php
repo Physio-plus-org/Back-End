@@ -7,7 +7,7 @@ $username = "root";
 $password = "";
 $dbname = "physio";
 $tabname = "physio_centers";
-//$psfusers = "psfusers";
+
 
 // Create connection
 $conn = mysqli_connect($servername, $username, $password);
@@ -41,17 +41,7 @@ if (mysqli_query($conn, $sql)) {
     echo "Error creating table: " . mysqli_error($conn);
 }
 
-$sql = "CREATE TABLE IF NOT EXISTS $psfusers (
-    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    username varchar(50) NOT NULL,
-    passwd varchar(50) NOT NULL
-)";
 
-if (mysqli_query($conn, $sql)) {
-    echo "Table " . $psfusers ." created successfully";
-} else {
-    echo "Error creating table: " . mysqli_error($conn);
-}
 
 mysqli_close($conn);
 ?>
