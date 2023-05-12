@@ -10,17 +10,25 @@
 
 
  $sql = "SELECT first_name, last_name FROM patients";
- $result = mysqli_query($dbh, $sql);
 
-/*// Test to see if the php gets correctly the data
+  $result = mysqli_query($dbh, $sql);
+
+  $output = array();
+    while($row = $result->fetch_assoc()) {
+        $output[] = $row;
+    }
+
+echo json_encode($output);
+
+/*Test to see if the php gets correctly the data
 
  while ($row = mysqli_fetch_assoc($result)) {
     echo "first_name: " . $row["first_name"] . "<br>";
     echo "last_name: " . $row["last_name"] . "<br>";
   }
-  */
+*/
 
-$patients = mysqli_fetch_all($result,MYSQLI_ASSOC);
-echo $patients;
-mysqli_close($dbh);
+ // $patients = mysqli_fetch_all($result,MYSQLI_ASSOC);
+
+  mysqli_close($dbh);
 ?>
