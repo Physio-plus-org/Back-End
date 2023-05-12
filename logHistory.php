@@ -13,22 +13,15 @@
 
   $result = mysqli_query($dbh, $sql);
 
-  $output = array();
-    while($row = $result->fetch_assoc()) {
-        $output[] = $row;
+  
+    while($row = mysqli_fetch_array($result)) {
+        $output = array();
+        $output['first_name'] = $row['first_name'];
+        $output['last_name'] = $row['last_name'];
     }
 
-echo json_encode($output);
 
-/*Test to see if the php gets correctly the data
-
- while ($row = mysqli_fetch_assoc($result)) {
-    echo "first_name: " . $row["first_name"] . "<br>";
-    echo "last_name: " . $row["last_name"] . "<br>";
-  }
-*/
-
- // $patients = mysqli_fetch_all($result,MYSQLI_ASSOC);
-
-  mysqli_close($dbh);
+mysqli_close($dbh);
+header("Content-Type: application/json");
+echo json_encode($output); 
 ?>
