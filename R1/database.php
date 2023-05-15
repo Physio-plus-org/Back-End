@@ -28,11 +28,11 @@ if (mysqli_query($conn, $sql)) {
 // Create tables
 mysqli_select_db($conn, $dbname);
 
-$sql = "CREATE TABLE IF NOT EXISTS $tabname (
-    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
-    address VARCHAR(70) NOT NULL,
-    tax_id_number VARCHAR(9) UNIQUE KEY
+$sql = "CREATE TABLE `physio_centers` (
+  `tax_id_number` varchar(10) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `address` varchar(100) NOT NULL,
+  PRIMARY KEY (`tax_id_number`)
 )";
 
 if (mysqli_query($conn, $sql)) {

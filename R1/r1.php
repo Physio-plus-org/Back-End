@@ -5,8 +5,7 @@ $data = array();
 $namePhysio = $_POST["name"];
 $addressPhysio = $_POST["address"];
 $afmPhysio = $_POST["tax_id_number"];
-//$passwd = $_POST["passwd"];
-//$username = $_POST["username"];
+
 
 
 // Replace with your own MySQL database credentials
@@ -15,7 +14,6 @@ $username = "root";
 $password = "";
 $dbname = "physio";
 $tabname = "physio_centers";
-//$psfusers = "psfusers";
 
 session_start();
 
@@ -27,22 +25,23 @@ if (!$conn) {
   die("Connection failed: " . mysqli_connect_error());
 }
  
- // Insert the data into the database
-  $sql = "INSERT INTO $tabname (name, address, tax_id_number) VALUES ('$namePhysio', '$addressPhysio', '$afmPhysio')";
+// Check if tax ID number already exists in the database
+$checkQuery = "SELECT * FROM $tabname WHERE tax_id_number = '$afmPhysio'";
+$result = mysqli_query($conn, $checkQuery);
+
+if (mysqli_num_rows($result) > 0) {
+    // Tax ID number already exists in the database
+    echo "Tax ID number already exists";
+} else {
+    // Insert the data into the database
+    $insertQuery = "INSERT INTO $tabname (tax_id_number, name, address) VALUES ('$afmPhysio', '$namePhysio', '$addressPhysio')";
   
-    if (mysqli_query($conn, $sql)) {
-         echo "Data saved successfully";
-  } else {
-      echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-   }
-
-  //  $sql = "INSERT INTO $psfusers (username, passwd) VALUES ('$username','" . md5($passwd) . "')";
-  //  if (mysqli_query($conn, $sql)) {
-  //   echo "Data saved successfully";
-  // } else {
-  //     echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-  //   }
-
+    if (mysqli_query($conn, $insertQuery)) {
+        echo "Data saved successfully";
+    } else {
+        echo "Error: " . $insertQuery . "<br>" . mysqli_error($conn);
+    }
+}
 
 // Close the database connection
 mysqli_close($conn);
