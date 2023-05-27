@@ -10,7 +10,7 @@
 
 
 
- $sql = "SELECT  GROUP_CONCAT(first_name) AS FirstNames , GROUP_CONCAT(last_name) AS LastNames FROM patients";
+ $sql = "SELECT  GROUP_CONCAT(first_name) AS FirstNames , GROUP_CONCAT(last_name) AS LastNames, GROUP_CONCAT(soc_sec_reg_num) AS AMKA FROM patients";
 
   $result = mysqli_query($dbh, $sql);
 
@@ -19,6 +19,7 @@
         $output = array();
         $output['FirstNames'] = $row['FirstNames'];
         $output['LastNames'] = $row['LastNames'];
+        $output['AMKA'] = $row['AMKA'];
     }
 
 
