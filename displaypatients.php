@@ -8,7 +8,7 @@ $dbname = "physio_app";
 $dbh = mysqli_connect($host, $uname, $pass, $dbname) or die("Cannot connect to the database.");
 mysqli_set_charset($dbh, "utf8");
 
-$sql = "SELECT first_name AS name FROM patients WHERE soc_sec_reg_num = '279869537922'";
+$sql = "SELECT CONCAT(first_name,' ', last_name) AS name, age, address FROM patients WHERE soc_sec_reg_num = '279869537922'";
 
 $result = mysqli_query($dbh, $sql);
 
@@ -16,17 +16,16 @@ if (!$result) {
     die("Query execution failed: " . mysqli_error($dbh));
 }
 
-$data = array();
+$row = mysqli_fetch_assoc($result);
 
-while ($row = mysqli_fetch_assoc($result)) {
-    $data[] = $row;
-}
+
+$data = array(
+    "name" => $row['name'],
+    "age" =>$row['age'],
+    "address" =>$row['address']
+);
 
 $response = json_encode($data, JSON_UNESCAPED_UNICODE);
-
-$response = preg_replace_callback('/\\\\u([0-9a-fA-F]{4})/', function ($match) {
-    return mb_convert_encoding(pack('H*', $match[1]), 'UTF-8', 'UTF-16BE');
-}, $response);
 
 echo $response;
 
