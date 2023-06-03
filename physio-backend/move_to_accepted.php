@@ -7,11 +7,11 @@ if (!$database) {
     try {
         
         
-        // $patientName = $_POST['patientName'];
+        $patientName = $_POST['patientName'];
         
-        //test purposes
         
-        $patientName = "melipatata";
+        
+       
         
         
         $selectStmt = $database->prepare("SELECT * FROM upcomingAppoint WHERE patientName = :patientName");
@@ -42,7 +42,7 @@ if (!$database) {
                 $insertStmt->execute();
 
                 $deleteStmt = $database->prepare("DELETE FROM upcomingAppoint WHERE patientName = :patientName");
-                $deleteStmt->bindValue(':patientName', $patientName, SQLITE3_INTEGER);
+                $deleteStmt->bindValue(':patientName', $patientName, SQLITE3_TEXT);
                 $deleteStmt->execute();
 
                 $database->exec("COMMIT");

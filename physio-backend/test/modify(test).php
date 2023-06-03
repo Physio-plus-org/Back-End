@@ -8,7 +8,7 @@ if (!$database) {
 }
 
 //test
-$database->exec("UPDATE upcomingAppoint SET reason = 'ponaei i plati' WHERE patientName = 'krepas'");
+$database->exec("UPDATE upcomingAppoint SET date = '20/05/2023' WHERE patientName = 'krepas'");
 
 
 
