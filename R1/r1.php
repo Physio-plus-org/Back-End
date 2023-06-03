@@ -12,7 +12,7 @@ $afmPhysio = $_POST["tax_id_number"];
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "physio";
+$dbname = "physio_plus";
 $tabname = "physio_centers";
 
 session_start();
