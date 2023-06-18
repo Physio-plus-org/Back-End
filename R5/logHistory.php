@@ -1,28 +1,26 @@
 <?php
- $output = array();
- $host="localhost";
- $uname="root";
- $pass="";
- $dbname="patients";
- 
- $dbh = mysqli_connect($host,$uname,$pass) or die("cannot connect");
- mysqli_select_db($dbh, $dbname);
+ require('../Utils/dbconnection.php');
 
- $sql = "SELECT * FROM patients";
+ if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $db = new DBConnection();
 
-  $result = mysqli_query($dbh, $sql);
+    if($db->connect()){
+     $sql = "SELECT * FROM patients;";
+     $result = $db->query($sql);
+  
+    if ($result->num_rows > 0) {
+      $output = array();
+      while($row = $result -> fetch_assoc()) {
+        array_push($output,$row);
+      }
 
-  if ($result->num_rows > 0) {
-    while($row = $result -> fetch_assoc()) {
-        $output[] = $row;    
-    }
-
-    $json = json_encode($output);
-    echo $json;
+      $json = json_encode($output);
+      echo $json;
+     }
+  }
+  else{
+    echo "Not connected";
+ }
+    $db->close();
 }
-
-   
-mysqli_close($dbh);
-header("Content-Type: application/json");
- 
 ?>
