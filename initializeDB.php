@@ -11,13 +11,12 @@ function generateRandomString($length = 25) {
    return $randomString;
 }
  $db = new DBConnection();
- $conn = $db->connect();
- if($conn){
+ if($db->connect()){
     echo "connected";
  }else{
     echo "not connected";
  }
- $conn->close();
+ $db->close();
 //  $ids = array();
 //  for( $i = 0; $i < 10; $i++) {
 //    $id = rand(1000, 9999) . rand(1000, 9999) . rand(1000, 9999);
