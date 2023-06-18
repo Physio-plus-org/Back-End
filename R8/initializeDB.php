@@ -1,5 +1,6 @@
 <?php
-require('database.php');
+require('../Utils/database.php');
+
 function generateRandomString($length = 25) {
    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
    $charactersLength = strlen($characters);
@@ -16,6 +17,7 @@ function generateRandomString($length = 25) {
  }else{
     echo "not connected";
  }
+ $conn->close();
 //  $ids = array();
 //  for( $i = 0; $i < 10; $i++) {
 //    $id = rand(1000, 9999) . rand(1000, 9999) . rand(1000, 9999);

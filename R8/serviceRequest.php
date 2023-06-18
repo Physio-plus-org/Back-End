@@ -1,9 +1,9 @@
 <?php
- require('dbconnection.php');
+ require('../Utils/dbconnection.php');
+ 
  if ($_SERVER["REQUEST_METHOD"] == "POST") {
  $db = new DBConnection();
- $conn = $db->connect();
- if ($conn) {
+ if ($db->connect()) {
     $sql = "SELECT * FROM services;";
     $result = $db->query($sql);
     if ($result->num_rows > 0) {
@@ -14,5 +14,6 @@
         echo json_encode($response);
     }
  }
+ $db->close();
 }
 ?>

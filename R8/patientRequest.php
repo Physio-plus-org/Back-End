@@ -1,16 +1,16 @@
 <?php
-require('dbconnection.php');
+require('../Utils/dbconnection.php');
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
  $patient_id = $_POST["patient_id"];
  $db = new DBConnection();
- $conn= $db->connect();
- if($conn){
+ if($db->connect()){
     if ($patient_id == "*") {
         $sql = "SELECT * FROM patients;";
     } else {
         $sql = "SELECT * FROM patients WHERE soc_sec_reg_num='".$patient_id."';";
     }
-    $result = $conn->query($sql);
+    $result = $db->query($sql);
     if ($result->num_rows > 0) {
         $response = array();
         while($row = $result->fetch_assoc()) {
@@ -21,5 +21,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
  }else{
     echo "not connected";
  }
+ $db->close();
 }
  ?>

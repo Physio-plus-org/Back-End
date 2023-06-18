@@ -1,10 +1,9 @@
 <?php 
- $host="localhost";
- $uname="root";
- $pass="";
- $dbname="physio_plus";
- $db = mysqli_connect($host,$uname,$pass,$dbname) or die("cannot connect");
- 
+ require('../Utils/dbconnection.php');
+
+ $db = new DBConnection();
+ $db->connect();
+
  try {
  $patient_id = $_POST["patient_id"];
  $sql = "SELECT DISTINCT(patient_id), tax_id_number as center_id, 
