@@ -4,6 +4,7 @@ class DBConnection {
     private $DB_USERNAME;
     private $DB_PASSWORD;
     private $DB_NAME;
+    private $DB_PORT;
     private $DB_CONN_OBJ;
     
     function __construct() {
@@ -11,10 +12,17 @@ class DBConnection {
         $this->DB_USERNAME="sql7627055";
         $this->DB_PASSWORD="g5FniXm1RI";
         $this->DB_NAME="sql7627055";
+        $this->DB_PORT=3306;
     }
 
     function connect() {
-        $this->DB_CONN_OBJ = mysqli_connect($this->DB_HOST,$this->DB_USERNAME,$this->DB_PASSWORD,$this->DB_NAME) or die("cannot connect");
+        $this->DB_CONN_OBJ = mysqli_connect(
+            $this->DB_HOST,
+            $this->DB_USERNAME,
+            $this->DB_PASSWORD,
+            $this->DB_NAME,
+            $this->DB_PORT)
+        or die("cannot connect");
         return $this->DB_CONN_OBJ ? True : False;
     }
 
