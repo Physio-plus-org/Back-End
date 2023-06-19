@@ -8,10 +8,10 @@ class DBConnection {
     private $DB_CONN_OBJ;
     
     function __construct() {
-        $this->DB_HOST="sql7.freemysqlhosting.net";
-        $this->DB_USERNAME="sql7627055";
-        $this->DB_PASSWORD="g5FniXm1RI";
-        $this->DB_NAME="sql7627055";
+        $this->DB_HOST= "localhost";
+        $this->DB_USERNAME= "id20930892_physio_user";
+        $this->DB_PASSWORD="Physio__Plus_User2023";
+        $this->DB_NAME="id20930892_physio_plus";
         $this->DB_PORT=3306;
     }
 
