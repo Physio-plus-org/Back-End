@@ -3,7 +3,7 @@
     
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $title = $_POST["title"];
-        $description = $$title = $_POST["desc"];
+        $description = $$title = $_POST["description"];
         $code = $$title = $_POST["code"];
         $cost = $$title = $_POST["cost"];
         $db = new DBConnection();
