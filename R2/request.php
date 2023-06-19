@@ -11,5 +11,6 @@
             $sql = 'INSERT INTO services (title, description, code, cost) VALUES ("'.$title.'", "'.$description.'", "'.$code.'", '.$cost.')';
             $result = mysqli_query($conn, $sql);
         }
+        $db->close();
     }    
 ?>

@@ -13,7 +13,6 @@ $tabname = "physio_centers";
 // Create a connection to the database
 $db = new DBConnection();
 $db->connect();
-$conn = $db->DB_CONN_OBJ;
  
 // Check if tax ID number already exists in the database
 $checkQuery = "SELECT * FROM $tabname WHERE tax_id_number = '$afmPhysio'";
@@ -29,7 +28,7 @@ if ($result->num_rows > 0) {
     if ($db->query($insertQuery)) {
         echo "Data saved successfully";
     } else {
-        echo "Error: " . $insertQuery . "<br>" . $conn->error;
+        echo "Error: " . $insertQuery . "<br>" . $db->error();
     }
 }
 

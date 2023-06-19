@@ -30,6 +30,10 @@ class DBConnection {
         $this->DB_CONN_OBJ->close();
     }
 
+    function error() {
+        return $this->DB_CONN_OBJ->error;
+    }
+
     function query($sql) {
         return $this->DB_CONN_OBJ->query($sql);
     }
