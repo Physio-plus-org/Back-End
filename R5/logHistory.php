@@ -5,7 +5,7 @@
     $db = new DBConnection();
 
     if($db->connect()){
-     $sql = "SELECT * FROM patients;";
+     $sql = "SELECT * FROM patients";
      $result = $db->query($sql);
   
     if ($result->num_rows > 0) {
