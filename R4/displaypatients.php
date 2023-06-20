@@ -1,49 +1,30 @@
 <?php
+require('../Utils/dbconnection.php');
 
-$host = "localhost";
-$uname = "root";
-$pass = "";
-$dbname = "physio_app";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $db = new DBConnection();
 
-$dbh = mysqli_connect($host, $uname, $pass, $dbname) or die("Cannot connect to the database.");
-mysqli_set_charset($dbh, "utf8");
+    if ($db->connect()) {
+        $ssrn = $_POST['amka'];
 
-$sqlPatient = "SELECT CONCAT(first_name, ' ', last_name) AS name, age, address FROM patients WHERE soc_sec_reg_num = '287261045727'";
-$resultPatient = mysqli_query($dbh, $sqlPatient);
+        $sql = "SELECT CONCAT(first_name, ' ', last_name) AS name, address FROM patients WHERE ssrn = '$ssrn'";
+        $result = $db->query($sql);
 
-if (!$resultPatient) {
-    die("Query execution failed: " . mysqli_error($dbh));
+        if ($result->num_rows > 0) {
+            $output = array();
+            while ($row = $result->fetch_assoc()) {
+                array_push($output, $row);
+            }
+
+            $json = json_encode($output);
+            echo $json;
+        } else {
+            echo "No records found.";
+        }
+    } else {
+        echo "Not connected";
+    }
+
+    $db->close();
 }
-
-$rowPatient = mysqli_fetch_assoc($resultPatient);
-
-$data = array(
-    "name" => $rowPatient['name'],
-    "age" => $rowPatient['age'],
-    "address" => $rowPatient['address'],
-    "sessions" => array()
-);
-
-$sqlSession = "SELECT date, hours, notes FROM sessions WHERE patient_id = '287261045727' ORDER BY date";
-$resultSession = mysqli_query($dbh, $sqlSession);
-
-if (!$resultSession) {
-    die("Query execution failed: " . mysqli_error($dbh));
-}
-
-while ($rowSession = mysqli_fetch_assoc($resultSession)) {
-    $session = array(
-        "date" => $rowSession['date'],
-        "hours" => $rowSession['hours'],
-        "notes" => $rowSession['notes']
-    );
-    $data['sessions'][] = $session;
-}
-
-$response = json_encode($data, JSON_UNESCAPED_UNICODE);
-
-echo $response;
-
-mysqli_close($dbh);
-
 ?>
