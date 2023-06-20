@@ -9,7 +9,7 @@
         $db = new DBConnection();
         if ($db->connect()) {
             $sql = 'INSERT INTO services (title, description, code, cost) VALUES ("'.$title.'", "'.$description.'", "'.$code.'", '.$cost.')';
-            $result = mysqli_query($conn, $sql);
+            $result = $db->query($sql);
         }
         $db->close();
     }    
