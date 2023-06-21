@@ -1,5 +1,6 @@
 <?php 
  require('../Utils/dbconnection.php');
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
  $db = new DBConnection();
  $db->connect();
@@ -48,4 +49,5 @@
  } catch (Exception $e) {
     echo "No request";
  }
+}
 ?>
