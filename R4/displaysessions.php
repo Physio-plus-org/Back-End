@@ -1,41 +1,30 @@
 <?php
+require('../Utils/dbconnection.php');
 
-$host = "localhost";
-$uname = "id20930892_physio_user";
-$pass = "Physio__Plus_User2023";
-$dbname = "id20930892_physio_plus";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $db = new DBConnection();
 
-$dbh = mysqli_connect($host, $uname, $pass, $dbname) or die("Cannot connect to the database.");
-mysqli_set_charset($dbh, "utf8");
+    if ($db->connect()) {
+        $ssrn = $_POST['amka'];
 
-// Retrieve the patientName variable from the Java class
-$patientName = $_POST['patientName'];
+        $sql = "SELECT date, notes FROM sessions WHERE patient_id = '$ssrn'";
+        $result = $db->query($sql);
 
-// Use mysqli_real_escape_string to prevent SQL injection
-$escapedPatientName = mysqli_real_escape_string($dbh, $patientName);
+        if ($result->num_rows > 0) {
+            $output = array();
+            while ($row = $result->fetch_assoc()) {
+                array_push($output, $row);
+            }
 
-$sql = "SELECT date, hours, notes FROM sessions WHERE name = '$escapedPatientName'";
+            $json = json_encode($output);
+            echo $json;
+        } else {
+            echo "No records found.";
+        }
+    } else {
+        echo "Not connected";
+    }
 
-$result = mysqli_query($dbh, $sql);
-
-if (!$result) {
-    die("Query execution failed: " . mysqli_error($dbh));
+    $db->close();
 }
-
-$row = mysqli_fetch_assoc($result);
-
-
-$data = array(
-    "date" => $row['date'],
-    "hours" =>$row['hours'],
-    "notes" =>$row['notes']
-);
-
-$response = json_encode($data, JSON_UNESCAPED_UNICODE);
-
-echo $response;
-
-mysqli_close($dbh);
-
-
 ?>

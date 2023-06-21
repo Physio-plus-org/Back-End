@@ -1,15 +1,14 @@
 <?php
-$database = new SQLite3("./databases/appointments.db"); 
 
-if (!$database) {
-  die('Failed to connect to the database');
-} else {
+
+if ($db->connect()){
     $result = "success";
     echo $result;
 
-  
-
-  $database->close();
-  unset($database);
+    $database->close();
+    unset($database);
+}else{
+    die('Failed to connect to the database: ' . $database->connect_error);
 }
+    
 ?>

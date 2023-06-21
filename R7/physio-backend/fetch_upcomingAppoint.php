@@ -1,19 +1,26 @@
 <?php
+require("../Utils/dbconnection.php");
 
-$dbFile = './databases/appointments.db'; 
 
-try {
-    $pdo = new PDO("sqlite:$dbFile");
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $physio_center = $row["physio_center"];
+                $patient_id = $row["patient_id"];
+                $date_time = $row["date_time"];
+                $status = $row['status'];
+                
+            
+            $db = new DBConnection();
+            if ($db->connect()) {
+                $sql = "SELECT * FROM requests";
+                $result = $db->query($sql);
+            }
+            $db->close();
+            
+            echo json_encode($requests);
+        
 
-    $query = "SELECT * FROM upcomingAppoint";
-    $stmt = $pdo->query($query);
-    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    header('Content-Type: application/json');
-    echo json_encode($results);
-} catch (PDOException $e) {
-    echo "Exception Error detected: " . $e->getMessage();
+            header('Content-Type: application/json');
+            echo json_encode($results);
 }
-
+   
 ?>
