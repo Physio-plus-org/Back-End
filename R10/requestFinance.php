@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             WHERE patient_id=$patient_id;
             ";
     $result = $db->query($sql);
-    $results = array("history" => array());
+    $results = array();
     while ($row = $result->fetch_assoc()) {
         $center = array(
             "tax_id_number" => $row["center_id"], 
@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             )
         );
         array_push(
-            $results["history"], 
+            $results, 
             array("center" => $center, "session" => $session)
         );
     }
