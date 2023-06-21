@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($db->connect()) {
         $ssrn = $_POST['amka'];
 
-        $sql = "SELECT CONCAT(first_name, ' ', last_name) AS name, address FROM patients WHERE ssrn = '$ssrn'";
+        $sql = "SELECT CONCAT(first_name, ' ', last_name) AS name, address, ssrn FROM patients WHERE ssrn = '$ssrn'";
         $result = $db->query($sql);
 
         if ($result->num_rows > 0) {
