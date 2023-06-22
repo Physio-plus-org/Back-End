@@ -7,23 +7,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
  try {
  $patient_id = $_POST["patient_id"];
- $sql = "SELECT DISTINCT(patient_id), tax_id_number as center_id, 
-                    name as center_name, id as session_id, 
-                    date as session_date, notes as session_notes,
-                    code as service_code, title as service_title, 
-                    description as service_desc, cost as service_cost
-            FROM 
-            ((sessions JOIN financial_moves USING (patient_id)) 
-            JOIN services ON code=service_id) 
-            JOIN physio_centers ON physio_center_id=tax_id_number
-            WHERE patient_id=$patient_id;
-            ";
+ $sql = "SELECT 
+	patient_id, 
+	tax_id_number as center_id, 
+    name as center_name, 
+    id as session_id, 
+    date as session_date,
+    notes as session_notes,
+    code as service_code,
+    title as service_title, 
+    description as service_desc,
+    cost as service_cost,
+    address
+FROM 
+	(
+        (
+            financial_moves fm 
+            JOIN 
+            physio_centers pc 
+            ON fm.physio_center_id=pc.tax_id_number
+    	) 
+        JOIN
+        sessions
+        USING (patient_id)
+	)
+    JOIN
+    services
+    ON service_id=code
+WHERE patient_id='$patient_id';";
     $result = $db->query($sql);
     $results = array();
     while ($row = $result->fetch_assoc()) {
         $center = array(
             "tax_id_number" => $row["center_id"], 
-            "name" => $row["center_name"]
+            "name" => $row["center_name"],
+            "address" => $row["address"]
         );
         $session = array(
             "id" => $row["session_id"], 
